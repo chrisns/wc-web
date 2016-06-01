@@ -5,4 +5,6 @@ dependencies:
   override:
     - curl https://install.meteor.com | /bin/sh
 
-meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS
+test:
+  post:
+    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS

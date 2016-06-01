@@ -7,4 +7,4 @@ dependencies:
   pre:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh
-    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS
+    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS | cat

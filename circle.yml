@@ -3,7 +3,7 @@ machine:
     version: stable
 dependencies:
   cache_directories:
-    - ".meteor"
+    - ".meteor/local"
   pre:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh

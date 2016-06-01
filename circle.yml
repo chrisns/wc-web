@@ -10,4 +10,4 @@ dependencies:
 
 test:
   post:
-    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS/bundle.tbz
+    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS

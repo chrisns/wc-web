@@ -1,13 +1,10 @@
 machine:
   node:
-    version: 5
+    version: stable
 dependencies:
   cache_directories:
     - ".meteor"
   pre:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh
-
-test:
-  post:
     - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS

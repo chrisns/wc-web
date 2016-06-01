@@ -2,9 +2,9 @@ machine:
   node:
     version: 5
 dependencies:
-  override:
+  pre:
     - curl https://install.meteor.com | /bin/sh
 
 test:
   post:
-    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS
+    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS/bundle.tbz

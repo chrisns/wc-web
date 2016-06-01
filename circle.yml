@@ -1,11 +1,8 @@
 machine:
   node:
-    version: 0.10.40
+    version: 5
 dependencies:
   override:
     - curl https://install.meteor.com | /bin/sh
-    - npm install
-checkout:
-  post:
-    - git submodule update --init
-   
+
+meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS

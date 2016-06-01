@@ -7,6 +7,8 @@ dependencies:
   pre:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh
+  override:
+    - npm install
 
 test:
   post:

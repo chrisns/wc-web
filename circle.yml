@@ -14,10 +14,13 @@ dependencies:
   pre:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh
-    - meteor build --architecture os.linux.x86_64 ./
+
+test:
+  post:
+    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS
     # - docker build -t ${dockename} .
     # - docker tag ${dockename} ${dockertag}
-    - mv wc-web.tar.gz $CIRCLE_ARTIFACTS
+#    - mv wc-web.tar.gz $CIRCLE_ARTIFACTS
 
 # deployment:
   # hub:

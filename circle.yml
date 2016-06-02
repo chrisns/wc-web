@@ -4,7 +4,8 @@ machine:
   services:
     - docker
   environment:
-    dockerref: wecomp/wc-web:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+    dockename: wecomp/wc-web
+    dockertag: ${dockename}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
 dependencies:
   cache_directories:
@@ -14,12 +15,13 @@ dependencies:
     - npm config set loglevel warn
     - curl https://install.meteor.com | /bin/sh
     - meteor build --architecture os.linux.x86_64 ./
-    - docker build -t ${dockerref} .
+    # - docker build -t ${dockename} .
+    # - docker tag ${dockename} ${dockertag}
     - mv wc-web.tar.gz $CIRCLE_ARTIFACTS
 
-deployment:
-  hub:
-    branch: master
-    commands:
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push ${dockerref}
+# deployment:
+  # hub:
+    # branch: master
+    # commands:
+      # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      # - docker push ${dockerref}

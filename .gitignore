@@ -4,3 +4,4 @@ node_modules
 .idea
 wc-web.tar.gz
 wc-web.iml
+bundle

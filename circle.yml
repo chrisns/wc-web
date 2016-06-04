@@ -1,6 +1,4 @@
 machine:
-  node:
-    version: 0.10.40
   services:
     - docker
   environment:
@@ -13,17 +11,19 @@ dependencies:
     - "~/.meteor"
   pre:
     - curl https://install.meteor.com | /bin/sh
+  override:
+    - meteor npm install
 
 test:
+  override:
+    - meteor npm test
   post:
-    - meteor build --architecture os.linux.x86_64 $CIRCLE_ARTIFACTS
-    # - docker build -t ${dockename} .
-    # - docker tag ${dockename} ${dockertag}
-#    - mv wc-web.tar.gz $CIRCLE_ARTIFACTS
+    - meteor build --architecture os.linux.x86_64 --server-only --directory ./
+    - docker build -t ${dockertag} .
 
-# deployment:
-  # hub:
-    # branch: master
-    # commands:
-      # - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      # - docker push ${dockerref}
+ deployment:
+   hub:
+     branch: master
+     commands:
+       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+       - docker push ${dockerref}

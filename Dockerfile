@@ -1,31 +1,11 @@
-FROM node:6.2.0
+FROM node:0.10
 
-#RUN apt-get update && apt-get install -y \
-#    sudo
+RUN mkdir -p /home/app
 
-ADD https://install.meteor.com/install-meteor.sh /tmp
-RUN sh /tmp/install-meteor.sh
+COPY bundle /home/app
 
-RUN mkdir -p /home/app/build
+WORKDIR /home/app
 
-RUN useradd app && \
-#    usermod -aG sudo app && \
-    chown -R app:app /home/app
+RUN cd programs/server && npm install
 
-USER app
-
-
-WORKDIR /home/app/build
-
-COPY package.json .
-RUN npm install
-
-COPY .meteor .meteor
-COPY packages packages
-
-ENV LC_ALL en_US.UTF-8
-#RUN meteor lint
-
-COPY . .
-
-#RUN npm test
+CMD node main.js

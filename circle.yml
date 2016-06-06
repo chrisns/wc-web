@@ -1,25 +1,27 @@
 machine:
   services:
     - docker
+#  node:
+#    version: stable
   environment:
     dockename: wecomp/wc-web
     dockertag: ${dockename}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
-dependencies:
-  cache_directories:
-    - ".meteor/local"
-    - "~/.meteor"
-  pre:
-    - curl https://install.meteor.com | /bin/sh
-  override:
-    - meteor npm install
+#dependencies:
+#  cache_directories:
+#    - ".meteor/local"
+#    - "~/.meteor"
+#  pre:
+#    - curl https://install.meteor.com | /bin/sh
+#  override:
+#    - meteor npm install
 
-test:
-  override:
-    - meteor npm test
-  post:
-    - meteor build --architecture os.linux.x86_64 --server-only --directory ./
-    - docker build -t ${dockertag} .
+#test:
+#  override:
+#    - meteor npm test
+#  post:
+#    - meteor build --architecture os.linux.x86_64 --server-only --directory ./
+#    - docker build -t ${dockerref} .
 
 #deployment:
 #  hub:

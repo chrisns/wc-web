@@ -1,0 +1,20 @@
+version: '2'
+services:
+  be:
+    build: be
+    depends_on:
+      - orientdb
+    ports:
+      - "8000:8000"
+  fe:
+    build: fe
+    ports:
+      - "8080:80"
+
+  orientdb:
+    image: orientdb:latest
+    expose:
+      - 2424
+      - 2480
+    environment:
+      - ORIENTDB_ROOT_PASSWORD=root

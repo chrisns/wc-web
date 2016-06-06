@@ -5,16 +5,12 @@ machine:
 #    version: stable
   environment:
     dockename: wecomp/wc-web
-    dockertag: ${dockename}:${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+    dockertag: ${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
-#dependencies:
-#  cache_directories:
-#    - ".meteor/local"
-#    - "~/.meteor"
-#  pre:
-#    - curl https://install.meteor.com | /bin/sh
-#  override:
-#    - meteor npm install
+dependencies:
+  pre:
+  - docker build -t ${dockename}-be:${dockertag} be
+  - docker build -t ${dockename}-fe:${dockertag} fe
 
 #test:
 #  override:

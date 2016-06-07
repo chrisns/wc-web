@@ -17,18 +17,19 @@ dependencies:
   override:
     - docker-compose up -d --force-recreate
     - docker wait wcweb_waiter_1
+  post:
+    - mkdir -p images
+    - docker save wcweb_be > images/wcweb_be
+    - docker save wcweb_fe > images/wcweb_fe
+    - docker save wcweb_test > images/wcweb_test
+    - docker save selenium/standalone-chrome > images/selenium
+    - docker save orientdb > images/orientdb
+
 
 test:
   override:
     - docker-compose run test npm test
   post:
-    - mkdir images
-    - docker save wcweb_be > images/wcweb_be
-    - docker save wcweb_fe > images/wcweb_fe
-    - docker save wcweb_test > images/wcweb_test
-#    - docker save selenium/standalone-chrome > selenium
-#    - docker save orientdb > orientdb
-
     - docker-compose down
     - docker-compose rm --all -f
 

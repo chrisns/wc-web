@@ -16,7 +16,6 @@ dependencies:
     - for f in images/*; do docker load < $f ; done ; true
   override:
     - docker-compose up -d --force-recreate
-    - docker wait wcweb_waiter_1
   post:
     - mkdir -p images
     - docker save wcweb_be > images/wcweb_be
@@ -27,6 +26,8 @@ dependencies:
 
 
 test:
+  pre:
+    - docker wait wcweb_waiter_1
   override:
     - docker-compose run test npm test
   post:

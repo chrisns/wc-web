@@ -6,6 +6,8 @@ machine:
     dockertag: ${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
 dependencies:
+  pre:
+    - sudo pip install docker-compose
   override:
     - docker-compose up -d --force-recreate
     - docker wait wcweb_waiter_1

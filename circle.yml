@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   override:
-    - docker-compose up -d --build
+    - docker-compose up -d --force-recreate
     - docker wait wcweb_waiter_1
 
 test:

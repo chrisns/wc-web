@@ -1,23 +1,21 @@
 machine:
   services:
     - docker
-#  node:
-#    version: stable
   environment:
     dockename: wecomp/wc-web
     dockertag: ${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
 dependencies:
-  pre:
-  - docker build -t ${dockename}-be:${dockertag} be
-  - docker build -t ${dockename}-fe:${dockertag} fe
+  override:
+    - docker-compose up -d --build
+    - docker wait wcweb_waiter_1
 
-#test:
-#  override:
-#    - meteor npm test
-#  post:
-#    - meteor build --architecture os.linux.x86_64 --server-only --directory ./
-#    - docker build -t ${dockerref} .
+test:
+  override:
+    - docker-compose run test npm test
+  post:
+    - docker-compose down
+    - docker-compose rm --all
 
 #deployment:
 #  hub:

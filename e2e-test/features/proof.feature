@@ -6,4 +6,4 @@ Feature: Skeleton working
 
   Scenario: check front end
     Given I am on the frontend
-    Then I see "Written with leopards and love" in the title
+    Then I see "Home — Example Application" in the title

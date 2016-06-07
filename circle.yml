@@ -19,7 +19,7 @@ test:
     - docker-compose run test npm test
   post:
     - docker-compose down
-    - docker-compose rm --all
+    - docker-compose rm --all -f
 
 #deployment:
 #  hub:

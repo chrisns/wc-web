@@ -8,7 +8,7 @@ RUN npm install
 COPY . .
 RUN npm test
 
-#ENV NODE_ENV production
+ENV NODE_ENV production
 #RUN npm prune
 
 CMD npm start

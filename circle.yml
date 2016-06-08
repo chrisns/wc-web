@@ -15,7 +15,7 @@ dependencies:
     - sudo pip install docker-compose
     - for f in images/*; do docker load < $f ; done ; true
   override:
-    - docker-compose up -d --force-recreate
+    - docker-compose up -d --force-recreate --build
   post:
     - mkdir -p images
     - docker save wcweb_be > images/wcweb_be
@@ -31,7 +31,7 @@ test:
   override:
     - docker-compose run test npm test
   post:
-    - docker-compose down
+    - docker-compose kill
     - docker-compose rm --all -f
 
 #deployment:

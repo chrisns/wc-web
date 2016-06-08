@@ -2,13 +2,14 @@ FROM node:latest
 
 RUN echo 'deb http://packages.linuxmint.com debian import' >> /etc/apt/sources.list
 
-RUN apt-get update && \
-  apt-get install -y --force-yes \
+RUN apt-get update \
+  && apt-get install -y --force-yes \
     nginx \
     xvfb \
     openjdk-7-jre \
     firefox \
-    vim
+    vim \
+  && apt-get clean
 
 RUN rm -r /var/www/html
 
@@ -18,7 +19,7 @@ WORKDIR /home/app
 
 COPY package.json package.json
 
-RUN npm install
+RUN npm install && npm cache clean
 
 COPY . .
 

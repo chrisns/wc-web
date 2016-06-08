@@ -11,7 +11,6 @@ RUN apt-get update && \
     xvfb \
     openjdk-7-jre \
     firefox \
-    google-chrome-stable \
     vim
 
 RUN rm -r /var/www/html

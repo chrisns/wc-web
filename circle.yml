@@ -4,7 +4,7 @@ machine:
   services:
     - docker
   environment:
-    dockertag: ${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
+    DOCKERTAG: ${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}
 
 dependencies:
   cache_directories:
@@ -41,9 +41,9 @@ deployment:
      - docker tag wcweb_fe wecomp/fe:latest
      - docker push wecomp/fe:latest
      - docker push wecomp/be:latest
-     - docker tag wcweb_be wecomp/wc-be:${dockertag}
-     - docker tag wcweb_fe wecomp/wc-fe:${dockertag}
-     - docker push wecomp/fe:${dockertag}
-     - docker push wecomp/be:${dockertag}
+     - docker tag wcweb_be wecomp/wc-be:${DOCKERTAG}
+     - docker tag wcweb_fe wecomp/wc-fe:${DOCKERTAG}
+     - docker push wecomp/fe:${DOCKERTAG}
+     - docker push wecomp/be:${DOCKERTAG}
      - docker-compose kill
      - docker-compose rm --all -f

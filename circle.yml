@@ -17,9 +17,9 @@ dependencies:
     - docker-compose up -d --force-recreate --build
   post:
     - mkdir -p images
-    - docker save wcweb_be > images/wcweb_be
-    - docker save wcweb_fe > images/wcweb_fe
-    - docker save wcweb_test > images/wcweb_test
+#    - docker save wcweb_be > images/wcweb_be
+#    - docker save wcweb_fe > images/wcweb_fe
+#    - docker save wcweb_test > images/wcweb_test
     - docker save selenium/standalone-chrome > images/selenium
     - docker save orientdb > images/orientdb
     - docker save martin/wait > images/wait

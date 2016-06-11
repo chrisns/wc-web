@@ -1,0 +1,24 @@
+version: '2'
+services:
+  waiter:
+    image: martin/wait
+  be:
+    image: wecomp/be:latest
+    restart: always
+    depends_on:
+      - orientdb
+    ports:
+      - "9080:8000"
+  fe:
+    image: wecomp/fe:latest
+    restart: always
+    ports:
+      - "9081:80"
+  orientdb:
+    image: orientdb:latest
+    restart: always
+    expose:
+      - 2424
+      - 2480
+    environment:
+      - ORIENTDB_ROOT_PASSWORD=root

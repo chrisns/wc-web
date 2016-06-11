@@ -3,8 +3,6 @@ machine:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
-  environment:
-    DOCKERTAG: ${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}
 
 dependencies:
   cache_directories:
@@ -17,20 +15,15 @@ dependencies:
     - docker-compose up -d --force-recreate --build
   post:
     - mkdir -p images
-#    - docker save wcweb_be > images/wcweb_be
-#    - docker save wcweb_fe > images/wcweb_fe
-#    - docker save wcweb_test > images/wcweb_test
     - docker save selenium/standalone-chrome > images/selenium
     - docker save orientdb > images/orientdb
     - docker save martin/wait > images/wait
-
 
 test:
   pre:
     - docker wait wcweb_waiter_1
   override:
     - docker-compose run test npm test
-
 
 deployment:
   hub:
@@ -41,9 +34,5 @@ deployment:
      - docker tag wcweb_fe wecomp/fe:latest
      - docker push wecomp/fe:latest
      - docker push wecomp/be:latest
-     - docker tag wcweb_be wecomp/wc-be:${DOCKERTAG}
-     - docker tag wcweb_fe wecomp/wc-fe:${DOCKERTAG}
-     - docker push wecomp/fe:${DOCKERTAG}
-     - docker push wecomp/be:${DOCKERTAG}
      - docker-compose kill
      - docker-compose rm --all -f

@@ -7,13 +7,13 @@ services:
     restart: always
     depends_on:
       - orientdb
-    ports:
-      - "9080:8000"
+    expose:
+      - 8000
   fe:
     image: wecomp/fe:latest
     restart: always
-    ports:
-      - "9081:80"
+    expose:
+      - 80
   orientdb:
     image: orientdb:latest
     restart: always
@@ -22,3 +22,21 @@ services:
       - 2480
     environment:
       - ORIENTDB_ROOT_PASSWORD=root
+
+  fe-lb:
+    image: dockercloud/haproxy
+    links:
+      - fe
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9080:80
+
+  be-lb:
+    image: dockercloud/haproxy
+    links:
+      - be
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9081:80

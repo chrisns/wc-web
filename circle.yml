@@ -22,6 +22,7 @@ dependencies:
     - docker save wcweb_test > images/wcweb_test
     - docker save selenium/standalone-chrome > images/selenium
     - docker save orientdb > images/orientdb
+    - docker save martin/wait > images/wait
 
 
 test:

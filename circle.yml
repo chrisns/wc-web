@@ -4,7 +4,6 @@ machine:
   services:
     - docker
   environment:
-    dockename: wecomp/wc-web
     dockertag: ${CIRCLE_BRANCH}_${CIRCLE_BUILD_NUM}
 
 dependencies:
@@ -30,13 +29,20 @@ test:
     - docker wait wcweb_waiter_1
   override:
     - docker-compose run test npm test
-  post:
-    - docker-compose kill
-    - docker-compose rm --all -f
 
-#deployment:
-#  hub:
-#    branch: master
-#    commands:
-#     - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p {$DOCKER_PASS}
-#     - docker push ${dockerref}
+
+deployment:
+  hub:
+    branch: master
+    commands:
+     - docker login -e ${DOCKER_EMAIL} -u ${DOCKER_USER} -p {$DOCKER_PASS}
+     - docker tag wcweb_be wecomp/wc-be:${dockertag}
+     - docker tag wcweb_fe wecomp/wc-fe:${dockertag}
+     - docker push wecomp/fe:${dockertag}
+     - docker push wecomp/be:${dockertag}
+     - docker tag wcweb_be wecomp/be:latest
+     - docker tag wcweb_fe wecomp/fe:latest
+     - docker push wecomp/fe:latest
+     - docker push wecomp/be:latest
+     - docker-compose kill
+     - docker-compose rm --all -f

@@ -1,42 +1,56 @@
 version: '2'
 services:
-  waiter:
-    image: martin/wait
   be:
     image: wecomp/be:latest
     restart: always
     depends_on:
-      - orientdb
+      - orientdb-lb
     expose:
       - 8000
+    environment:
+      - VIRTUAL_HOST=*:9081
+
   fe:
     image: wecomp/fe:latest
     restart: always
     expose:
       - 80
+    environment:
+      - VIRTUAL_HOST=*:9080
+
   orientdb:
     image: orientdb:latest
     restart: always
     expose:
-      - 2424
       - 2480
+      - 2424
+      - 2434
     environment:
       - ORIENTDB_ROOT_PASSWORD=root
+      - TCP_PORTS=2424
+    volumes:
+      - /orientdb/backup
+    command: /orientdb/bin/server.sh  -Ddistributed=true
 
-  fe-lb:
+  lb:
     image: dockercloud/haproxy
     links:
       - fe
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 9080:80
-
-  be-lb:
-    image: dockercloud/haproxy
-    links:
       - be
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 9081:80
+      - 9080:9080
+      - 9081:9081
+
+  orientdb-lb:
+    image: dockercloud/haproxy
+    links:
+      - orientdb
+    expose:
+      - 80
+      - 2424
+    ports:
+      - 2480:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

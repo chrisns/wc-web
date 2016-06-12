@@ -1,0 +1,7 @@
+<button ng-if="!loggedIn" ng-click="login()">Login</button>
+
+<div ng-if="loggedIn">
+  {{user.name}}
+  <img src="{{user.picture.data.url}}">
+  <button ng-click="logout()">Not you?</button>
+</div>

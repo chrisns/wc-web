@@ -56,7 +56,7 @@
     "gulp-streamify": "^1.0.2",
     "gulp-util": "^3.0.1",
     "isparta": "^4.0.0",
-    "istanbul": "~0.3.0",
+    "istanbul": "^0.3.22",
     "karma": "^0.13.21",
     "karma-browserify": "^5.0.2",
     "karma-coverage": "douglasduteil/karma-coverage#next",
@@ -75,5 +75,7 @@
     "build": "gulp prod"
   },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "angularjs-facebook": "^0.2.3"
+  }
 }

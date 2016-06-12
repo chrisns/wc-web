@@ -1,5 +1,5 @@
 import angular from 'angular';
-
+import Facebook from 'angularjs-facebook';
 // angular modules
 import constants from './constants';
 import onConfig  from './on_config';
@@ -18,7 +18,8 @@ const requires = [
   'app.filters',
   'app.controllers',
   'app.services',
-  'app.directives'
+  'app.directives',
+  'facebook'
 ];
 
 // mount on window for testing
